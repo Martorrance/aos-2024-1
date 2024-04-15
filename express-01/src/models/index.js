@@ -1,31 +1,30 @@
-import Sequelize from "sequelize";
-
-import getUserModel from "./user";
-import getMessageModel from "./message";
-
-const sequelize = new Sequelize(
-  process.env.DATABASE,
-  process.env.DATABASE_USER,
-  process.env.DATABASE_PASSWORD,
-  {
-    // native: true,
-    // ssl: true,
-    host: process.env.DATABASE_HOST,
-    dialect: "postgres",
-  }
-);
-
-const models = {
-  User: getUserModel(sequelize, Sequelize),
-  Message: getMessageModel(sequelize, Sequelize),
+// Definindo objetos para representar usuários e mensagens
+let users = {
+  1: {
+    id: "1",
+    username: "Alice Johnson",
+  },
+  2: {
+    id: "2",
+    username: "Bob Smith",
+  },
 };
 
-Object.keys(models).forEach((key) => {
-  if ("associate" in models[key]) {
-    models[key].associate(models);
-  }
-});
+let messages = {
+  1: {
+    id: "1",
+    text: "Hi there!",
+    userId: "1",
+  },
+  2: {
+    id: "2",
+    text: "Goodbye!",
+    userId: "2",
+  },
+};
 
-export { sequelize };
-
-export default models;
+// Exportando os objetos users e messages como parte do objeto models
+export const models = {
+  users,
+  messages,
+};
